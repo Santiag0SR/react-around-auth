@@ -1,0 +1,12 @@
+.button {
+  cursor: pointer;
+  transition-property: opacity;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.button:focus {
+  outline: none;
+}

@@ -1,0 +1,14 @@
+.card__like-button {
+  width: 21px;
+  height: 19px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #000000;
+}
+
+.card__like-button:hover {
+  opacity: 0.5;
+}
