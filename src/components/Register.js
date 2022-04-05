@@ -1,66 +1,51 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Register() {
-  // create necessary state variables
-  const [username, setUsername] = useState("");
+function Register({ handleRegistrationSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = () => {
-    if (password === confirmPassword) {
-      // TODO -- handle registration
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleRegistrationSubmit(email, password);
   };
 
   return (
-    <div className="register">
-      <p className="register__welcome">Please register.</p>
-      <form className="register__form">
-        <label>Username:</label>
-        {/* onChange prop sets the state whenever the input's value changes */}
+    <>
+      <form className="form">
+        <h2 className="form__title">Sign up</h2>
         <input
-          name="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label>Email:</label>
-        <input
+          className="form__input"
+          id="email-input"
           name="email"
           type="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label>Password:</label>
         <input
+          className="form__input"
+          id="password-input"
           name="password"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label>Confirm Password:</label>
-        <input
-          name="confirmPassword"
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
       </form>
-      <div className="register__button-container">
-        <button onClick={handleSubmit} className="register__link">
-          Sign up
-        </button>
-      </div>
+      <button onClick={handleSubmit} className="form__submit">
+        Sign up
+      </button>
       {/* link to login page */}
-      <div className="register__signin">
-        <p>Already a member?</p>
-        <Link to="login" className="register__login-link">
-          Log in here
-        </Link>
+      <div className="from__redirection">
+        <p>
+          Already a member?{" "}
+          <Link to="/singin" className="from__link">
+            Log in here!
+          </Link>
+        </p>
       </div>
-    </div>
+    </>
   );
 }
 

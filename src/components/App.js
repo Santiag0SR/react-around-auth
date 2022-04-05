@@ -6,6 +6,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import InfoTooltipPopup from "./InfoTooltipPopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 import EditProfilePopup from "./EditProfilePopup";
@@ -13,15 +14,25 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
+import ProtectedRoute from "./ProtectedRoute";
+import { register } from "../utils/auth";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isTooltipOpen, setTooltipOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [status, setStatus] = React.useState(true);
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
 
   useEffect(() => {
     api
@@ -50,6 +61,27 @@ function App() {
       })
       .catch((err) => console.error(`Problem adding new card: ${err}`));
   }
+
+  const handleRegistrationSubmit = (email, password) => {
+    register(email, password)
+      .then((res) => {
+        if (res.data._id) {
+          console.log("res OK");
+          setStatus("success");
+          navigate("/singin");
+        } else {
+          console.log("Something went wrong.");
+          setStatus("failed");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setStatus("failed");
+      })
+      .finally(() => {
+        setTooltipOpen(true);
+      });
+  };
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((item) => item._id === currentUser._id);
@@ -113,6 +145,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
+    setTooltipOpen(false);
   }
 
   return (
@@ -120,30 +153,40 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Routes>
+          <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
+            <Route
+              exact
+              path="/"
+              element={
+                <Main
+                  onEditAvatarClick={handleEditAvatarClick}
+                  onEditProfileClick={handleEditProfileClick}
+                  onAddPlaceClick={handleAddPlaceClick}
+                  onCardClick={handleCardClick}
+                  cards={cards}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                />
+              }
+            />
+          </Route>
           <Route
-            exact
-            path="/"
+            path="/singin"
+            element={<Login handleLogin={handleLogin} />}
+          ></Route>
+          <Route
+            path="/singup"
             element={
-              <Main
-                onEditAvatarClick={handleEditAvatarClick}
-                onEditProfileClick={handleEditProfileClick}
-                onAddPlaceClick={handleAddPlaceClick}
-                onCardClick={handleCardClick}
-                cards={cards}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
-              />
+              <Register handleRegistrationSubmit={handleRegistrationSubmit} />
             }
           ></Route>
-          <Route path="/singin" element={<Login />}></Route>
-          <Route path="/singup" element={<Register />}></Route>
           <Route
             path="*"
             element={
               loggedIn ? (
-                <Navigate to="/singup" replace />
-              ) : (
                 <Navigate to="/" replace />
+              ) : (
+                <Navigate to="/singin" replace />
               )
             }
           />
@@ -179,6 +222,12 @@ function App() {
         <ImagePopup
           closeButtons={closeButton}
           selectedCard={selectedCard}
+          onClose={closeAllPopups}
+        />
+        <InfoTooltipPopup
+          isOpen={isTooltipOpen}
+          closeButtons={closeButton}
+          status={status}
           onClose={closeAllPopups}
         />
       </CurrentUserContext.Provider>

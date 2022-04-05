@@ -49,3 +49,13 @@
 @import url("./blocks/modal/__preview-caption/modal__preview-caption.css");
 @import url("./blocks/modal/__preview-figure/modal__preview-figure.css");
 @import url("./blocks/button/button.css");
+@import url("./blocks/form/form.css");
+@import url("./blocks/form/__input/form__input.css");
+@import url("./blocks/form/__link/form__link.css");
+@import url("./blocks/form/__redirection/from__redirection.css");
+@import url("./blocks/form/__submit/form__submit.css");
+@import url("./blocks/form/__title/form__title.css");
+
+
+
+
