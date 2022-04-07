@@ -15,7 +15,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
-import { register } from "../utils/auth";
+import { register, authorize, getContent } from "../utils/auth";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -41,6 +41,7 @@ function App() {
         setCards(data);
       })
       .catch((err) => console.error(`Problem fetching cards cards: ${err}`));
+    handletokenCheck();
   }, []);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ function App() {
           setStatus("success");
           navigate("/singin");
         } else {
-          console.log("Something went wrong.");
+          console.log("one of the fields was filled in incorrectly.");
           setStatus("failed");
         }
       })
@@ -82,6 +83,41 @@ function App() {
         setTooltipOpen(true);
       });
   };
+
+  const handleLoginSubmit = (email, password) => {
+    authorize(email, password)
+      .then((res) => {
+        if (res.token) {
+          handleLogin();
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        if (err.statusCode === 400) {
+          console.log(err.message);
+        } else if (err.statusCode === 401) {
+          console.log(err.message);
+        }
+        setStatus("failed");
+        setTooltipOpen(true);
+      });
+  };
+
+  function handletokenCheck() {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
+      getContent(jwt)
+        .then((res) => {
+          if (res) {
+            handleLogin();
+            navigate("/");
+          } else {
+            localStorage.removeItem("jwt");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((item) => item._id === currentUser._id);
@@ -172,7 +208,7 @@ function App() {
           </Route>
           <Route
             path="/singin"
-            element={<Login handleLogin={handleLogin} />}
+            element={<Login handleLoginSubmit={handleLoginSubmit} />}
           ></Route>
           <Route
             path="/singup"

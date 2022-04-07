@@ -2,27 +2,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as auth from "../utils/auth";
 
-function Login({ handleLogin }) {
+function Login({ handleLoginSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      return;
-    }
-    auth
-      .authorize(email, password)
-      .then((res) => {
-        if (res.token) {
-          setEmail("");
-          setPassword("");
-          handleLogin();
-          navigate("/");
-        }
-      })
-      .catch(console.log);
+    handleLoginSubmit(email, password);
+    setEmail("");
+    setPassword("");
   };
 
   return (

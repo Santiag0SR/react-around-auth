@@ -14,7 +14,7 @@ function InfoTooltipPopup(props) {
               alt="Success icon"
               className="infotooltip__icon"
             ></img>
-            <p className="infotooltip__message">
+            <p className="infotooltip__text">
               Success! You have now been registered.
             </p>
           </div>
@@ -25,7 +25,7 @@ function InfoTooltipPopup(props) {
               alt="Failed icon"
               className="infotooltip__icon"
             ></img>
-            <p className="info-tooltip__message">
+            <p className="infotooltip__text">
               Oops, something went wrong! Please try again.
             </p>
           </div>
