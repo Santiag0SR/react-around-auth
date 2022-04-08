@@ -34,6 +34,12 @@ function App() {
     setLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    setLoggedIn(false);
+    localStorage.removeItem("jwt");
+    navigate("/singin");
+  };
+
   useEffect(() => {
     api
       .getCards()
@@ -41,7 +47,8 @@ function App() {
         setCards(data);
       })
       .catch((err) => console.error(`Problem fetching cards cards: ${err}`));
-    handletokenCheck();
+    handleTokenCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -103,7 +110,7 @@ function App() {
       });
   };
 
-  function handletokenCheck() {
+  function handleTokenCheck() {
     if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
       getContent(jwt)
@@ -187,13 +194,17 @@ function App() {
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+        <Header
+          handleLogout={handleLogout}
+          user={localStorage.email}
+          loggedIn={loggedIn}
+        />
         <Routes>
-          <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
-            <Route
-              exact
-              path="/"
-              element={
+          <Route
+            exact
+            path="/"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
                 <Main
                   onEditAvatarClick={handleEditAvatarClick}
                   onEditProfileClick={handleEditProfileClick}
@@ -203,9 +214,9 @@ function App() {
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}
                 />
-              }
-            />
-          </Route>
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/singin"
             element={<Login handleLoginSubmit={handleLoginSubmit} />}

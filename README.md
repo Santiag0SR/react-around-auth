@@ -1,8 +1,28 @@
-Around the U.S. project on React, featuring authorization and registration.
+# Around React
 
-This repository will contain your own front-end project on React with added authorization and registration features.
-Start working with your previously built front end code from Sprint 11.
+## [Check out my work!](https://santiag0sr.github.io/around-react/)
 
-All authorization, registration and token requests must go through to the server running on [https://register.nomoreparties.co](https://register.nomoreparties.co/).
+## Intro
 
-Good luck!
+"Around React" is a project of the course with Practicum by Yandex (https://practicum.yandex.com/) to be a Web Developer.
+
+## Description
+
+The purpose of this project is to refactor the previous "Around the U.S" website using React.
+
+The website is fully responsive in all device sizes and has some functionality implemented.
+
+Get cards from API.
+Be able to change the profile.
+Add new cards
+Delete cards
+Like button
+Validation forms
+
+Authorization, registration and token requests added through the server running on [https://register.nomoreparties.co](https://register.nomoreparties.co/).
+
+## Technologies and Techniques
+
+We were introduce to React and refactor all the previous code. React, Javascript, CSS and HTML language has been used to create this website.
+
+We also organize the code so it is BEM compliant.
