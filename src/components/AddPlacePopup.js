@@ -27,42 +27,40 @@ function AddPlacePopup(props) {
   }
 
   return (
-    <div>
-      <PopupWithForm
-        isOpen={props.isOpen}
-        moldalType={"add"}
-        modalTitle={"New Place"}
-        modalButtonText={"Create"}
-        closeButtons={props.closeButtons}
-        onClose={props.onClose}
-        onSubmit={handleSubmit}
-      >
-        <input
-          value={title}
-          onChange={handleTitleChange}
-          id="title-input"
-          className="modal__form-item modal__form-item_type_title"
-          type="text"
-          name="title"
-          placeholder="Title"
-          required
-          minLength="1"
-          maxLength="40"
-        />
-        <span id="title-input-error" className="modal__error" />
-        <input
-          value={link}
-          onChange={handleLinkChange}
-          id="link-input"
-          className="modal__form-item modal__form-item_type_image-link"
-          type="url"
-          name="link"
-          placeholder="Image link"
-          required
-        />
-        <span id="link-input-error" className="modal__error" />
-      </PopupWithForm>
-    </div>
+    <PopupWithForm
+      isOpen={props.isOpen}
+      moldalType={"add"}
+      modalTitle={"New Place"}
+      modalButtonText={"Create"}
+      closeButtons={props.closeButtons}
+      onClose={props.onClose}
+      onSubmit={handleSubmit}
+    >
+      <input
+        value={title}
+        onChange={handleTitleChange}
+        id="title-input"
+        className="modal__form-item modal__form-item_type_title"
+        type="text"
+        name="title"
+        placeholder="Title"
+        required
+        minLength="1"
+        maxLength="40"
+      />
+      <span id="title-input-error" className="modal__error" />
+      <input
+        value={link}
+        onChange={handleLinkChange}
+        id="link-input"
+        className="modal__form-item modal__form-item_type_image-link"
+        type="url"
+        name="link"
+        placeholder="Image link"
+        required
+      />
+      <span id="link-input-error" className="modal__error" />
+    </PopupWithForm>
   );
 }
 

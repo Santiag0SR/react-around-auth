@@ -12,7 +12,7 @@ function Register({ handleRegistrationSubmit }) {
 
   return (
     <>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <h2 className="form__title">Sign up</h2>
         <input
           className="form__input"
@@ -32,10 +32,10 @@ function Register({ handleRegistrationSubmit }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <button onClick={handleSubmit} className="form__submit">
+          Sign up
+        </button>
       </form>
-      <button onClick={handleSubmit} className="form__submit">
-        Sign up
-      </button>
       {/* link to login page */}
       <div className="from__redirection">
         <p>

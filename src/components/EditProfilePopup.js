@@ -10,7 +10,7 @@ function EditProfilePopup(props) {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -29,44 +29,42 @@ function EditProfilePopup(props) {
   }
 
   return (
-    <div>
-      <PopupWithForm
-        modalType={"edit"}
-        modalTitle={"Edit Profile"}
-        modalButtonText={"Save"}
-        closeButtons={props.closeButtons}
-        isOpen={props.isOpen}
-        onClose={props.onClose}
-        onSubmit={handleSubmit}
-      >
-        <input
-          value={name}
-          onChange={handleNameChange}
-          id="name-input"
-          className="modal__form-item modal__form-item_type_name"
-          type="text"
-          name="name"
-          placeholder="Name"
-          required
-          minLength="2"
-          maxLength="40"
-        />
-        <span id="name-input-error" className="modal__error" />
-        <input
-          value={description}
-          onChange={handleDescriptionChange}
-          id="about-input"
-          className="modal__form-item modal__form-item_type_about"
-          type="text"
-          name="about"
-          placeholder="About Me"
-          required
-          minLength="2"
-          maxLength="200"
-        />
-        <span id="about-input-error" className="modal__error" />
-      </PopupWithForm>
-    </div>
+    <PopupWithForm
+      modalType={"edit"}
+      modalTitle={"Edit Profile"}
+      modalButtonText={"Save"}
+      closeButtons={props.closeButtons}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      onSubmit={handleSubmit}
+    >
+      <input
+        value={name || ""}
+        onChange={handleNameChange}
+        id="name-input"
+        className="modal__form-item modal__form-item_type_name"
+        type="text"
+        name="name"
+        placeholder="Name"
+        required
+        minLength="2"
+        maxLength="40"
+      />
+      <span id="name-input-error" className="modal__error" />
+      <input
+        value={description || ""}
+        onChange={handleDescriptionChange}
+        id="about-input"
+        className="modal__form-item modal__form-item_type_about"
+        type="text"
+        name="about"
+        placeholder="About Me"
+        required
+        minLength="2"
+        maxLength="200"
+      />
+      <span id="about-input-error" className="modal__error" />
+    </PopupWithForm>
   );
 }
 

@@ -16,28 +16,26 @@ function EditAvatarPopup(props) {
   }
 
   return (
-    <div>
-      <PopupWithForm
-        isOpen={props.isOpen}
-        moldalType={"avatar"}
-        modalTitle={"Change profile picture"}
-        modalButtonText={"Change"}
-        closeButtons={props.closeButtons}
-        onClose={props.onClose}
-        onSubmit={handleSubmit}
-      >
-        <input
-          ref={avatarRef}
-          id="link-input-avatar"
-          className="modal__form-item modal__form-item_type_image-link"
-          type="url"
-          name="avatar"
-          placeholder="Image link"
-          required
-        />
-        <span id="link-input-avatar-error" className="modal__error" />
-      </PopupWithForm>
-    </div>
+    <PopupWithForm
+      isOpen={props.isOpen}
+      moldalType={"avatar"}
+      modalTitle={"Change profile picture"}
+      modalButtonText={"Change"}
+      closeButtons={props.closeButtons}
+      onClose={props.onClose}
+      onSubmit={handleSubmit}
+    >
+      <input
+        ref={avatarRef}
+        id="link-input-avatar"
+        className="modal__form-item modal__form-item_type_image-link"
+        type="url"
+        name="avatar"
+        placeholder="Image link"
+        required
+      />
+      <span id="link-input-avatar-error" className="modal__error" />
+    </PopupWithForm>
   );
 }
 

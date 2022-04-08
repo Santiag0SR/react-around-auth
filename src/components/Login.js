@@ -14,7 +14,7 @@ function Login({ handleLoginSubmit }) {
 
   return (
     <>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <h2 className="form__title">Log in</h2>
         <input
           className="form__input"
@@ -34,10 +34,8 @@ function Login({ handleLoginSubmit }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <button className="form__submit">Log in</button>
       </form>
-      <button onClick={handleSubmit} className="form__submit">
-        Log in
-      </button>
       {/* link to login page */}
       <div className="from__redirection">
         <p>
